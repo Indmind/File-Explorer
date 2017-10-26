@@ -1,0 +1,21 @@
+{
+  "name": "fileexplorer",
+  "version": "0.0.1",
+  "description": "program file explorer sederhana",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "indmind",
+  "license": "MIT",
+  "dependencies": {
+    "ejs-electron": "^2.0.1",
+    "electron-pug": "^1.5.1",
+    "nedb": "^1.8.0",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "electron": "^1.7.9",
+    "electron-packager": "^9.1.0"
+  }
+}

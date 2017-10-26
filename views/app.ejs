@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=7">
+        <link rel="stylesheet" href="#" id="main-theme">
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <script>
+            if (typeof module === 'object') {
+                window.module = module;
+                module = undefined;
+            }
+        </script>
+
+            <script src="../assets/js/jquery.3.2.1.min.js"></script>
+        
+            <script>if (window.module) module = window.module;</script>
+        <title>File Explorer</title> 
+    </head>
+    <body>
+        <% include layouts/header.ejs %>
+        <div class="container">
+            <h4 id="header"></h4>
+            <div id="listFolderContainers">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date Modified</th> 
+                            <th>Size</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listBody">
+
+                    </tbody>
+                </table>
+            </div> 
+        </div>  
+        <% include layouts/footer.ejs %>
+        <script src="../assets/js/appScript.js"></script>
+        <script>
+            function onListEnter(_data){
+                if(_data.base){
+                    console.log(_data);
+                    setTitle(_data.base);
+                    setBackAbleAndNextAble(_data.backOrNext);
+                    const listBody = $("#listBody");
+                    let stringHtml = "";
+                    listBody.html("");
+                    _data.file.forEach((d) => {
+                        stringHtml += `<tr class='success' onclick="runFile(this.firstChild.innerHTML, this.lastChild.innerHTML)">`;
+                        stringHtml += createTd("list-item list-name hide", d.location);
+                        stringHtml += createTd("list-item list-name", d.name);
+                        stringHtml += createTd("list-item list-modif-time", d.stats.mtime);
+                        stringHtml += createTd("list-item list-size", formatBytes(d.stats.size, 1, fileOrFolder(d.stats.mode, d.name)));
+                        stringHtml += createTd("list-item list-type", fileOrFolder(d.stats.mode, d.name));
+                        //stringHtml += createTd("list-item list-location", fileOrFolder(d.location));
+                    
+                        stringHtml += "</tr>";
+                    });
+                    //if(_data[0]) setTitle(_data[0].base);
+                    //console.log(stringHtml);
+                    listBody.append(stringHtml);
+                    //console.log(_data)
+                }
+                
+            }
+            function createTd(_class, _text){
+                return `<td class="${_class}">${_text}</td>;`;
+            }
+            function fileOrFolder(_mode, _name){
+                const fileEkstension = _name.split('.').pop().toUpperCase();
+                return _mode & 0100000 ? fileEkstension + ' file' : (_mode & 0040000 ? 'folder' : '-');
+            }
+            function formatBytes(a,b,t){if(0==a)return t == "folder" ? '':"0 Bytes";var c=1024,d=b||2,e=["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"],f=Math.floor(Math.log(a)/Math.log(c));return parseFloat((a/Math.pow(c,f)).toFixed(d))+" "+e[f]}
+        </script>
+    </body>
+</html>
