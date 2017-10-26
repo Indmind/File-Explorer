@@ -7,6 +7,7 @@ const path = require('path');
 const url = require('url');
 const fs = require('fs');
 const xml2js = require('xml2js');
+const cmd = require('node-cmd');
 
 class Controller{
     constructor(_win){
@@ -128,6 +129,9 @@ class Controller{
     }
     disableButton(_query){
         this.send("back:disableButton", _query);
+    }
+    execCmd(_cmd){
+        cmd.run(_cmd);
     }
 }
 

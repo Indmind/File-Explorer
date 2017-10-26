@@ -76,6 +76,10 @@ function createMainWindow(){
         mainController.readDir();
     });
 
+    ipcMain.on("front:execFile", (e, path) => {
+        mainController.execCmd(path);
+    });
+
     ipcMain.on("front:backDir", () => {
         mainController.backDir();
     });
