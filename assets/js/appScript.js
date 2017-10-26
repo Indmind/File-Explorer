@@ -1,7 +1,6 @@
 const {
     ipcRenderer
 } = require('electron');
-const pug = require('pug');
 let listFile = [];
 let curFolder = '';
 
