@@ -56,7 +56,7 @@ function createMainWindow(){
         mainWindow = null;
     });
 
-    //mainWindow.setMenu(null);
+    mainWindow.setMenu(null);
     mainWindow.toggleDevTools();
    
     mainController = new helper.Controller(mainWindow);
@@ -77,7 +77,7 @@ function createMainWindow(){
     });
 
     ipcMain.on("front:execFile", (e, path) => {
-        mainController.execCmd(path);
+        mainController.execCmd(`"${path}"`);
     });
 
     ipcMain.on("front:backDir", () => {

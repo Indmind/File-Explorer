@@ -17,8 +17,8 @@ class Controller{
         this.win = _win;
         this.theme = this.createThemePath('bootstrap');
         this.completeList = {
-            base: this.currentPath,
-            file:[]
+            base: '',
+            file: []
         };
         this.showHidden = false;
         this.listFile = {
@@ -30,7 +30,7 @@ class Controller{
     readDir(){
         console.log("read dir")
         fs.readdir(this.currentPath, (err, res) => {
-            if(err) console.log(err);
+            if(err) this.alertError(err);
             console.log(this.currentPath)
             let dataProceced = 0;
             this.completeList = {
@@ -41,8 +41,11 @@ class Controller{
                 ],
                 file:[]
             };
+            console.log(res);
             res.forEach((r, i) => {
                 fs.stat(`${this.currentPath}\\${r}`, (err, s) => {
+                    //console.log(`${this.currentPath}\\${r}`);
+                    if(err) this.alertError(err);
                     this.completeList.file[i] = {
                         name: r,
                         stats: s,
@@ -59,6 +62,9 @@ class Controller{
     }
     send(_channel, _data){
         this.win.webContents.send(_channel, _data);
+    }
+    alertError(_err){
+        this.send("back:error", _err);
     }
     setTheme(_theme){
         this.send('back:setTheme', this.createThemePath(_theme));
@@ -131,6 +137,7 @@ class Controller{
         this.send("back:disableButton", _query);
     }
     execCmd(_cmd){
+        console.log("run: " + _cmd);
         cmd.run(_cmd);
     }
 }

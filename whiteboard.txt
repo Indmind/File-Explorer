@@ -1,0 +1,26 @@
+[p1, p2] dir = p2
+
+pindah
+
+arr.push(p3)
+
+[p1, p2, p3] index = 3 dir = p3
+
+[p1, p2, p3] index = 2 dir = p2
+
+jika user ada pada index 2 dan user menuju p4 maka hapus semua setelahnya
+
+jadi
+
+[p1, p2, p4]
+
+arr.push(p4)
+
+[p1, p2, p3, p4] index = 3 dir = p4
+
+[p1, p2, p3, p4] index = 2 dir = p2
+
+
+## history
+
+jika index - 1 tidak sama dengan undefined, maka bisa back else can't

@@ -37,8 +37,15 @@ ipcRenderer.on("list", (err, data) => {
 function setTitle(path){
     document.title = path;
     curFolder = path.split('\\').pop();
+    $("#pathInput").val(path);
     $("#header").html(curFolder);
 }
+
+$("#pathInput").keypress((e) => {
+    if(e.which == 13){
+        ipcRenderer.send("front:changeDir", $("#pathInput").val());
+    }
+ });
 
 function setBackAbleAndNextAble(_arr){
     // backable
@@ -59,3 +66,17 @@ ipcRenderer.on("back:setTheme", (err, path) => {
     $("#main-theme").attr('href', path);
     console.log(path);
 });
+
+ipcRenderer.on("back:error", (err, _err) => {
+    alert(objToString(_err));
+})
+
+function objToString (obj) {
+    var str = '';
+    for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            str += p + '::' + obj[p] + '\n';
+        }
+    }
+    return str;
+}
